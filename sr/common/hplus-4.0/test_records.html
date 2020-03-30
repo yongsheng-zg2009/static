@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>压测内容列表</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.0.0" rel="stylesheet">
+    <base target="_blank">
+
+</head>
+
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="wrapper wrapper-content">
+            <div class="row animated fadeInRight">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="text-center float-e-margins p-md">
+                            <a href="#" class="btn btn-xs btn-primary" id="lightVersion">浅色</a>
+                            <a href="#" class="btn btn-xs btn-primary" id="darkVersion">深色</a>
+                            <a href="#" class="btn btn-xs btn-primary" id="leftVersion">布局切换</a>
+                        </div>
+                        <div class="" id="ibox-content">
+
+                            <div id="vertical-timeline" class="vertical-container light-timeline">
+
+                                <div id="vertical-timeline-demo" class="vertical-timeline-block" hidden>
+                                    <div class="vertical-timeline-icon navy-bg">
+                                        <i class="fa fa-briefcase"></i>
+                                    </div>
+                                    <div class="vertical-timeline-content">
+                                        <h2 name="test_code">会议</h2>
+                                        <p name="test_name">上一年的销售业绩发布会。总结产品营销和销售趋势及销售的现状。
+                                        </p>
+                                        <a href="#" class="btn btn-sm btn-primary"> 更多信息</a>
+                                        <span class="vertical-date">今天 <br>
+                                        <small>2月3日</small>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.5"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+        // Local script for demo purpose only
+        $('#lightVersion').click(function (event) {
+            event.preventDefault()
+            $('#ibox-content').removeClass('ibox-content');
+            $('#vertical-timeline').removeClass('dark-timeline');
+            $('#vertical-timeline').addClass('light-timeline');
+        });
+
+        $('#darkVersion').click(function (event) {
+            event.preventDefault()
+            $('#ibox-content').addClass('ibox-content');
+            $('#vertical-timeline').removeClass('light-timeline');
+            $('#vertical-timeline').addClass('dark-timeline');
+        });
+
+        $('#leftVersion').click(function (event) {
+            event.preventDefault()
+            $('#vertical-timeline').toggleClass('center-orientation');
+        });
+
+        load_list();
+    });
+
+    function load_list() {
+        $.getJSON("http://server.family-lucky.club/all", function (result) {
+            // 列表数据渲染
+            var parentDiv = $('#vertical-timeline');
+            var innerHtml = "";
+            $.each(result, function (i, item) {
+                var demoHtml = "                           <div id=\"vertical-timeline-demo\" class=\"vertical-timeline-block\">\n" +
+                    "                                        <div class=\"vertical-timeline-icon navy-bg\">\n" +
+                    "                                            <i class=\"fa fa-briefcase\"></i>\n" +
+                    "                                        </div>\n" +
+                    "                                        <div class=\"vertical-timeline-content\">\n" +
+                    "                                            <h2>编号[" + item['id'] + "]</h2>\n" +
+                    "                                            <p>" + item['name'] + "\n" +
+                    "                                            </p>\n" +
+                    "                                            <a href=\"req_records.html?code="+ item['id'] +"\" class=\"btn btn-sm btn-primary\" target='_blank'> 更多信息</a>\n" +
+                    "                                            <span class=\"vertical-date\">状态:" + item['statusDesc'] + " <br>\n" +
+                    "                                        <small>" + item['ctime'] + "</small>\n" +
+                    "                                    </span>\n" +
+                    "                                        </div>\n" +
+                    "                                    </div>";
+                innerHtml += demoHtml;
+            });
+            parentDiv.html(innerHtml)
+        });
+    }
+
+</script>
+</body>
+
+</html>
