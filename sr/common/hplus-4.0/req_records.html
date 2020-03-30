@@ -48,14 +48,18 @@
         <div class="ibox-content">
             <div class="row row-lg">
                 <div class="col-sm-6">
-                    <h4 class="example-title">从URL加载</h4>
+                    <h4 class="example-title" id="tabe_name">压测接口信息</h4>
                     <div class="example">
                         <table id="req_data" data-toggle="table"
                                data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th data-field="id">ID</th>
+                                <th data-field="id">id</th>
+                                <th data-field="testCode">压测编号(test_code)</th>
                                 <th data-field="name">name</th>
+                                <th data-field="url">url</th>
+                                <th data-field="reqInfo">请求数据：reqInfo</th>
+                                <th data-field="rspData">返回结果：rspData</th>
                                 <th data-field="status">status</th>
                                 <th data-field="ctime">ctime</th>
                             </tr>
@@ -104,16 +108,16 @@
     var data_source = null;
     function load_req_records() {
         $.ajaxSettings.async = false;
-        $.getJSON("http://server.family-lucky.club/all?", function (result) {
+        $.getJSON("http://server.family-lucky.club/unitlist?code="+test_code, function (result) {
             data_source = result;
             // 代码处理
             $('#req_data').bootstrapTable({
                 data: data_source
             });
-
         });
     };
     load_req_records();
+
 </script>
 
 </body>
